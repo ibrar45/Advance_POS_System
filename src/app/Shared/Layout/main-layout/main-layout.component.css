@@ -1,0 +1,63 @@
+.vertical-menu {
+  overflow: hidden;
+  max-height: 100vh;
+}
+
+  .vertical-menu:hover {
+    overflow-y: auto;
+  }
+
+
+  .vertical-menu::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .vertical-menu::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+  }
+
+    .vertical-menu::-webkit-scrollbar-thumb:hover {
+      background-color: #555;
+    }
+.sidebar-flex-container {
+  display: flex;
+  flex-direction: column;
+/*  height: 100%;*/
+}
+
+.settings-item {
+  background-color: #0b1f3a;
+  margin-top: auto; /* push it to the bottom */
+  padding: 10px 0 0;
+}
+
+  .settings-item a {
+    color: white;
+  }
+
+  .settings-item:hover {
+    background-color: #112b4f;
+  }
+
+.loaderd {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #FFF;
+  border-bottom-color: #FF3D00;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

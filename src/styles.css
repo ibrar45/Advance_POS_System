@@ -1,0 +1,104 @@
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+::ng-deep angular-editor-toolbar button i {
+  font-family: FontAwesome !important;
+}
+
+.cur-p {
+  cursor: pointer;
+}
+
+.txt-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+
+.spinner-border {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  vertical-align: middle !important;
+  border: 3px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  -webkit-animation: .75s linear infinite spinner-border;
+  animation: 0.75s linear infinite spinner-border;
+}
+
+.auth-form-group-custom {
+  border: var(--bs-border-width) solid var(--bs-border-color-translucent) !important;
+  border-radius: var(--bs-border-radius) !important;
+}
+
+  .auth-form-group-custom .ng-select {
+    height: 62px;
+    padding-top: 23px;
+    padding-left: 0px;
+  }
+
+  .auth-form-group-custom ng-select .ng-select-container {
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  .auth-form-group-custom .form-select {
+    height: 62px;
+    padding-top: 23px;
+    padding-left: 0px
+  }
+
+  .auth-form-group-custom .form-control {
+    height: 62px;
+    padding-top: 23px;
+    padding-left: 10px;
+    border: none !important;
+  }
+
+  .auth-form-group-custom label {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    color: #767676;
+  }
+
+.ng-select .ng-select-container {
+  /*color: none !important;
+  background-color: none !important;*/
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  min-height: 36px;
+  align-items: center;
+}
+
+.table {
+  margin-bottom: 0rem !important;
+}
+
+.table-th-ptb th {
+  padding-left: 1px;
+  padding-right: 1px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: #fff;
+  background-color: #0099a1;
+  font-weight: 600;
+  font-family: "Segoe UI", GeezaPro, "DejaVu Serif", sans-serif, "-apple-system", BlinkMacSystemFont;
+  font-size: 14px;
+}
+
+.table-td-ptb td {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 1px;
+  padding-right: 1px;
+  font-family: "Segoe UI",GeezaPro,"DejaVu Serif",sans-serif,"-apple-system",BlinkMacSystemFont;
+}
+
+.text-Offwhite {
+  color: #dde4e7 !important;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

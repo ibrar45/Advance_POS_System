@@ -1,0 +1,68 @@
+<div class="products-container">
+  <div class="header">
+    <h2>🛍️ Product Catalog</h2>
+    <button (click)="openForm()" class="add-btn">+ Add Product</button>
+  </div>
+
+  <table class="product-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products; let i = index">
+        <td>{{ product.name }}</td>
+        <td>{{ product.category }}</td>
+        <td>Rs. {{ product.price }}</td>
+        <td>
+          <span [ngClass]="getStockClass(product.stock)">
+            {{ product.stock }}
+          </span>
+        </td>
+        <td>
+          <button (click)="openForm(i)">Edit</button>
+          <button (click)="deleteProduct(i)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Add/Edit Form -->
+  <div class="form-modal" *ngIf="formVisible">
+    <div class="form-box">
+      <h3>{{ isEditing ? 'Edit Product' : 'Add Product' }}</h3>
+
+      <form [formGroup]="form" (ngSubmit)="saveProduct()">
+        <label>
+          Name:
+          <input formControlName="name" />
+        </label>
+
+        <label>
+          Category:
+          <input formControlName="category" />
+        </label>
+
+        <label>
+          Price:
+          <input type="number" formControlName="price" />
+        </label>
+
+        <label>
+          Stock:
+          <input type="number" formControlName="stock" />
+        </label>
+
+        <div class="form-actions">
+          <button type="button" (click)="closeForm()">Cancel</button>
+          <button type="submit" [disabled]="form.invalid">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

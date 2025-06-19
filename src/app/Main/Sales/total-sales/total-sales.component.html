@@ -1,0 +1,36 @@
+<!-- TOP: Centered Search Bar -->
+<div class="search-bar-container">
+  <input type="text" [(ngModel)]="searchText" placeholder="Search products..." />
+  <ul *ngIf="filteredProducts.length > 0">
+    <li *ngFor="let product of filteredProducts" (click)="addToCart(product)">
+      {{ product.name }} – Rs.{{ product.price }}
+    </li>
+  </ul>
+</div>
+
+<!-- MAIN: Cart and Summary Layout -->
+<div class="sales-layout">
+  <!-- Cart Section -->
+  <div class="cart-section">
+    <h3>🛒 Cart</h3>
+    <div *ngIf="cart.length === 0">Cart is empty</div>
+    <div *ngFor="let item of cart" class="cart-item">
+      <span>{{ item.name }}</span>
+      <div class="qty-controls">
+        <button (click)="decreaseQty(item)">−</button>
+        <span>{{ item.quantity }}</span>
+        <button (click)="increaseQty(item)">+</button>
+      </div>
+      <span>Rs. {{ item.quantity * item.price }}</span>
+    </div>
+  </div>
+
+  <!-- Summary Section -->
+  <div class="summary-section">
+    <h3>💳 Summary</h3>
+    <p>Subtotal: Rs. {{ subtotal }}</p>
+    <p>Tax (5%): Rs. {{ tax }}</p>
+    <p class="total">Total: Rs. {{ total }}</p>
+    <button class="checkout-btn" (click)="checkout()">Checkout</button>
+  </div>
+</div>

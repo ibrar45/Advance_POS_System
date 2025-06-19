@@ -1,0 +1,69 @@
+<div class="customer-container">
+  <div class="header">
+    <h2>📅 Customer Management</h2>
+    <button class="add-btn" (click)="openCustomerForm()">+ Add Customer</button>
+  </div>
+
+  <!-- Search Bar -->
+  <input class="search-bar" type="text" placeholder="Search by name or phone" [(ngModel)]="searchText" />
+
+  <!-- Customer Table -->
+  <table class="customer-table">
+    <thead>
+      <tr>
+        <th>Avatar</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>History</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of filteredCustomers()">
+        <td><div class="avatar">{{ getInitials(customer.name) }}</div></td>
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.phone }}</td>
+        <td>{{ customer.email }}</td>
+        <td><button (click)="showView(customer)">View</button></td>
+        <td>
+          <button (click)="editCustomer(customer)">Edit</button>
+          <button class="delete" (click)="deleteCustomer(customer)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal (Add/Edit Customer) -->
+  <div class="modal-backdrop" *ngIf="showForm">
+    <div class="modal-box">
+      <h3>{{ editMode ? 'Edit' : 'Add' }} Customer</h3>
+      <form (ngSubmit)="saveCustomer()">
+        <label>Name: <input type="text" [(ngModel)]="form.name" name="name" required /></label>
+        <label>Phone: <input type="text" [(ngModel)]="form.phone" name="phone" required /></label>
+        <label>Email: <input type="email" [(ngModel)]="form.email" name="email" /></label>
+        <label>Total Sale: <input type="number" [(ngModel)]="form.totalSale" name="totalSale" /></label>
+        <label>Ranking: <input type="text" [(ngModel)]="form.ranking" name="ranking" /></label>
+        <div class="modal-actions">
+          <button type="button" (click)="closeForm()">Cancel</button>
+          <button type="submit">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal (View Customer) -->
+  <div class="modal-backdrop" *ngIf="showViewMode">
+    <div class="modal-box">
+      <h3>Customer Details</h3>
+      <p><strong>Name:</strong> {{ selectedCustomer?.name }}</p>
+      <p><strong>Phone:</strong> {{ selectedCustomer?.phone }}</p>
+      <p><strong>Email:</strong> {{ selectedCustomer?.email }}</p>
+      <p><strong>Total Sale:</strong> {{ selectedCustomer?.totalSale | currency:'$' }}</p>
+      <p><strong>Ranking:</strong> {{ selectedCustomer?.ranking }}</p>
+      <div class="modal-actions">
+        <button type="button" (click)="closeView()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

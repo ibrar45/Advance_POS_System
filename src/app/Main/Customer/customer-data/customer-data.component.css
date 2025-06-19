@@ -1,0 +1,105 @@
+/* customer.component.css */
+.customer-container {
+  background-color: white;
+  min-height: 100vh;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.search-section {
+  padding: 0;
+  margin-bottom: 2rem;
+  width: 90%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-box {
+  width: 100%;
+}
+
+  .search-box input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: hsl(0, 0%, 90%);
+    box-sizing: border-box;
+  }
+
+.records-section {
+  background-color: #e9ecef;
+  width: 90%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+  min-height: 70vh; /* Increased from 60vh to 70vh */
+  border-radius: 5px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+  border: none;
+}
+
+th, td {
+  padding: 1.25rem 1.5rem; /* Increased padding */
+  text-align: left;
+  border: none;
+}
+
+th {
+  background-color: transparent;
+  font-weight: bold;
+  color: #333;
+}
+
+tr:hover {
+  background-color: hsla(0, 0%, 85%, 0.5);
+}
+
+td {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .customer-container {
+    padding: 1.5rem;
+  }
+
+  .records-section {
+    min-height: 65vh; /* Slightly less on tablets */
+  }
+
+  th, td {
+    padding: 1rem 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .customer-container {
+    padding: 1rem;
+  }
+
+  .records-section {
+    min-height: 60vh; /* Slightly less on phones */
+    width: 95%;
+  }
+
+  th, td {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .search-box input {
+    padding: 0.6rem 0.8rem;
+  }
+}

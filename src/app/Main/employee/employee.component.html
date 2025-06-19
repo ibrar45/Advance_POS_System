@@ -1,0 +1,58 @@
+<div class="modal" *ngIf="showAddModal">
+  <div class="modal-content">
+    <h2>{{ editing ? 'Edit Employee' : 'Add New Employee' }}</h2>
+    <form (ngSubmit)="editing ? updateEmployee() : confirmAddEmployee()" #empForm="ngForm">
+      <label>Name:
+        <input type="text" [(ngModel)]="newEmployee.name" name="name" required>
+      </label>
+      <label>Role:
+        <select [(ngModel)]="newEmployee.role" name="role">
+          <option value="Admin">Admin</option>
+          <option value="Cashier">Cashier</option>
+        </select>
+      </label>
+      <div class="modal-actions">
+        <button type="submit" [disabled]="!empForm.valid">{{ editing ? 'Update' : 'Add' }}</button>
+        <button type="button" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Employee Management -->
+<section class="card">
+  <div class="header">
+    <h2>👨‍💼 Employee Management</h2>
+    <button class="add-btn" (click)="openAddModal()">+ Add Employee</button>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Avatar</th>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Performance</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let staff of employeeList">
+        <td><div class="avatar">{{ staff.name[0] }}</div></td>
+        <td>{{ staff.name }}</td>
+        <td>
+          <span class="badge" [ngClass]="staff.role.toLowerCase()">{{ staff.role }}</span>
+        </td>
+        <td>
+          <div class="performance-bar">
+            <div class="progress" [style.width.%]="calculatePerformance(staff.name)"></div>
+          </div>
+          <small>{{ calculatePerformance(staff.name) }}%</small>
+        </td>
+        <td>
+          <button class="edit-btn" (click)="editStaff(staff)">✏️</button>
+          <button class="delete-btn" (click)="removeStaff(staff)">🗑️</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>

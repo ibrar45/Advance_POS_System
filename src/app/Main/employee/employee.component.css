@@ -1,0 +1,198 @@
+/* Card Styling */
+.card {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  max-width: 1000px;
+  margin: 40px auto;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.add-btn {
+  background-color: #28a745;
+  color: #fff;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background-color: #218838;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 14px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  color: #555;
+}
+
+td {
+  vertical-align: middle;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #4e73df;
+  color: #fff;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Badges */
+.badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.admin {
+  background-color: #343a40;
+  color: #fff;
+}
+
+.cashier {
+  background-color: #ffc107;
+  color: #000;
+}
+
+/* Performance bar */
+.performance-bar {
+  background-color: #e9ecef;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100px;
+  height: 10px;
+  margin-bottom: 4px;
+}
+
+.performance-bar .progress {
+  background-color: #007bff;
+  height: 100%;
+  transition: width 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+/* Action buttons */
+button.edit-btn,
+button.delete-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin-right: 6px;
+}
+
+button.edit-btn:hover {
+  color: #007bff;
+}
+
+button.delete-btn:hover {
+  color: #dc3545;
+}
+
+/* Modal Styling */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  width: 400px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #333;
+}
+
+.modal-content input,
+.modal-content select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 4px;
+  box-sizing: border-box;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+.modal-actions button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-actions button[type='submit'] {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.modal-actions button[type='submit']:hover {
+  background-color: #0056b3;
+}
+
+.modal-actions button[type='button'] {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.modal-actions button[type='button']:hover {
+  background-color: #5a6268;
+}

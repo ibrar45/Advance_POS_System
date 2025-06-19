@@ -1,0 +1,35 @@
+<div class="inventory-container">
+  <h2>Inventory Management</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Stock</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items">
+        <td>{{ item.name }}</td>
+        <td>{{ item.stock }}</td>
+        <td><span [class]="getStatusClass(item.status)">{{ item.status }}</span></td>
+        <td><button (click)="openModal(item)">Reorder</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" *ngIf="showModal">
+    <div class="modal-box">
+      <h3>Update Stock</h3>
+      <p>Product: {{ selectedItem?.name }}</p>
+      <label>New Stock: <input type="number" [(ngModel)]="newStock" /></label>
+      <div class="modal-actions">
+        <button (click)="closeModal()">Cancel</button>
+        <button (click)="updateStock()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
