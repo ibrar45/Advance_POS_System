@@ -21,6 +21,11 @@ import { ProductsComponent } from './Main/products/products.component';
 import { InventoryComponent } from './Main/inventory/inventory.component';
 // import { EmpoyeeAiComponent } from './Main/empoyee-ai/empoyee-ai.component';
 import { EmployeeComponent } from './Main/employee/employee.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ReportComponent } from './Main/report/report.component';
+import { AiFeaturesComponent } from './Main/ai-features/ai-features.component';
+import { RouterModule } from '@angular/router';
+// import { ReportsComponent } from './reports/reports.component';
 
 //import { DashboardComponent } from './Main/Setup/dashboard/dashboard.component';
 
@@ -42,6 +47,8 @@ import { EmployeeComponent } from './Main/employee/employee.component';
     InventoryComponent,
     // EmpoyeeAiComponent,
     EmployeeComponent,
+    ReportComponent,
+    AiFeaturesComponent,
     //DashboardComponent
 
 
@@ -52,7 +59,9 @@ import { EmployeeComponent } from './Main/employee/employee.component';
      MatCardModule,
     MatIconModule,
     FormsModule,
-    ReactiveFormsModule
+    HttpClientModule,
+    ReactiveFormsModule,
+     RouterModule,
 
   ],
   providers: [

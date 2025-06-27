@@ -1,4 +1,4 @@
-<!-- TOP: Centered Search Bar -->
+<!-- 🔍 Search Bar -->
 <div class="search-bar-container">
   <input type="text" [(ngModel)]="searchText" placeholder="Search products..." />
   <ul *ngIf="filteredProducts.length > 0">
@@ -8,29 +8,47 @@
   </ul>
 </div>
 
-<!-- MAIN: Cart and Summary Layout -->
-<div class="sales-layout">
-  <!-- Cart Section -->
-  <div class="cart-section">
+<!-- 👤 Employee Selector -->
+<div class="employee-selector" style="margin: 20px 0;">
+  <label for="employee">Select Employee:</label>
+  <select [(ngModel)]="selectedEmployeeId">
+    <option [ngValue]="null" disabled selected>Select</option>
+    <option *ngFor="let emp of employees" [value]="emp.employeeId">
+      {{ emp.name }}
+    </option>
+  </select>
+</div>
+
+<!-- 🛒 Cart & Summary Layout -->
+<div class="sales-layout" style="display: flex; justify-content: space-between; gap: 40px;">
+  <!-- 🛍️ Cart Section -->
+  <div class="cart-section" style="flex: 1;">
     <h3>🛒 Cart</h3>
     <div *ngIf="cart.length === 0">Cart is empty</div>
-    <div *ngFor="let item of cart" class="cart-item">
+    <div *ngFor="let item of cart" class="cart-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
       <span>{{ item.name }}</span>
-      <div class="qty-controls">
+      <div class="qty-controls" style="display: flex; align-items: center;">
         <button (click)="decreaseQty(item)">−</button>
-        <span>{{ item.quantity }}</span>
+        <span style="margin: 0 10px;">{{ item.quantity }}</span>
         <button (click)="increaseQty(item)">+</button>
       </div>
       <span>Rs. {{ item.quantity * item.price }}</span>
     </div>
   </div>
 
-  <!-- Summary Section -->
-  <div class="summary-section">
+  <!-- 💳 Summary Section -->
+  <div class="summary-section" style="flex: 1;">
     <h3>💳 Summary</h3>
     <p>Subtotal: Rs. {{ subtotal }}</p>
     <p>Tax (5%): Rs. {{ tax }}</p>
-    <p class="total">Total: Rs. {{ total }}</p>
-    <button class="checkout-btn" (click)="checkout()">Checkout</button>
+    <p class="total" style="font-weight: bold;">Total: Rs. {{ total }}</p>
+    <button
+      class="checkout-btn"
+      [disabled]="!selectedEmployeeId || cart.length === 0"
+      (click)="checkout()"
+      style="margin-top: 20px;"
+    >
+      Checkout
+    </button>
   </div>
 </div>

@@ -1,0 +1,67 @@
+<div class="ai-dashboard-container">
+  <h2 class="title">🤖 AI Forecast Dashboard</h2>
+
+  <!-- Highlights -->
+  <div class="highlights">
+    <div class="highlight-card">
+      <h4>🏆 Best Employee</h4>
+      <p>{{ bestEmployee }}</p>
+    </div>
+    <div class="highlight-card">
+      <h4>⏰ Peak Sale Hours</h4>
+      <p>{{ peakHours.join(', ') }}</p>
+    </div>
+    <div class="highlight-card">
+      <h4>📈 Best Performing Product</h4>
+      <p>{{ bestProduct }}</p>
+    </div>
+  </div>
+
+  <!-- Dynamic Pricing Table -->
+  <div class="section">
+    <h3>💸 Dynamic Pricing Recommendations</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Current Price</th>
+          <th>Recommended Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of dynamicPricing">
+          <td>{{ item.product }}</td>
+          <td>Rs. {{ item.currentPrice }}</td>
+          <td>Rs. {{ item.recommendedPrice }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Expiring Soon Products -->
+  <div class="section">
+    <h3>🧾 Expiring Soon Products (Auto Discount Applied)</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Expiry Date</th>
+          <th>Discount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of expiringSoonProducts">
+          <td>{{ item.product }}</td>
+          <td>{{ item.expiryDate }}</td>
+          <td>{{ item.discount }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Forecast Chart -->
+  <div class="section">
+    <h3>📊 Sales Forecast</h3>
+    <img [src]="forecastChartUrl" alt="Sales Forecast Chart" class="chart-img" />
+  </div>
+</div>

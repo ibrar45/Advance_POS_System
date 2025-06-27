@@ -1,30 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-interface Product {
-  name: string;
-  category: string;
-  price: number;
-  stock: number;
-}
+import { Product, ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
-export class ProductsComponent {
-  products: Product[] = [
-    { name: 'Laptop', category: 'Electronics', price: 85000, stock: 8 },
-    { name: 'Mouse', category: 'Electronics', price: 1500, stock: 3 }
-  ];
-
+export class ProductsComponent implements OnInit {
+  products: Product[] = [];
   formVisible = false;
   isEditing = false;
   form: FormGroup;
-  selectedIndex: number | null = null;
+  selectedProductId: number | undefined;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private productService: ProductService) {
     this.form = this.fb.group({
       name: ['', Validators.required],
       category: ['', Validators.required],
@@ -33,40 +23,60 @@ export class ProductsComponent {
     });
   }
 
-  openForm(index?: number): void {
-    this.formVisible = true;
-    this.isEditing = index !== undefined;
-    this.selectedIndex = index ?? null;
+  ngOnInit(): void {
+    this.loadProducts();
+  }
 
-    if (this.isEditing && index !== undefined) {
-      this.form.patchValue(this.products[index]);
+  loadProducts(): void {
+    this.productService.getProducts().subscribe(data => this.products = data);
+  }
+
+  openForm(product?: Product): void {
+    this.formVisible = true;
+    this.isEditing = !!product;
+
+    if (product) {
+      this.selectedProductId = product.id;
+      this.form.patchValue(product);
     } else {
+      this.selectedProductId = undefined;
       this.form.reset();
     }
   }
 
-  saveProduct(): void {
-    if (this.form.valid) {
-      const newProduct = this.form.value;
+ saveProduct(): void {
+  if (this.form.valid) {
+    const formData = { ...this.form.value };
 
-      if (this.isEditing && this.selectedIndex !== null) {
-        this.products[this.selectedIndex] = newProduct;
-      } else {
-        this.products.push(newProduct);
-      }
-
-      this.formVisible = false;
-      this.selectedIndex = null;
+    if (this.isEditing && this.selectedProductId !== undefined) {
+      formData.id = this.selectedProductId; // ✅ Add id to the body
+      this.productService.updateProduct(this.selectedProductId, formData).subscribe(() => {
+        this.loadProducts();
+        this.formVisible = false;
+        this.selectedProductId = undefined;
+      });
+    } else {
+      this.productService.addProduct(formData).subscribe(added => {
+        this.products.push(added);
+        this.formVisible = false;
+      });
     }
   }
+}
 
-  deleteProduct(index: number): void {
-    this.products.splice(index, 1);
+
+  deleteProduct(product: Product): void {
+    if (product.id !== undefined) {
+      this.productService.deleteProduct(product.id).subscribe(() => {
+        this.products = this.products.filter(p => p !== product);
+      });
+    }
   }
 
   closeForm(): void {
     this.formVisible = false;
     this.form.reset();
+    this.selectedProductId = undefined;
   }
 
   getStockClass(stock: number): string {

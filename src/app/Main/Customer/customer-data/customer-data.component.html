@@ -4,10 +4,8 @@
     <button class="add-btn" (click)="openCustomerForm()">+ Add Customer</button>
   </div>
 
-  <!-- Search Bar -->
   <input class="search-bar" type="text" placeholder="Search by name or phone" [(ngModel)]="searchText" />
 
-  <!-- Customer Table -->
   <table class="customer-table">
     <thead>
       <tr>
@@ -47,6 +45,21 @@
           <button type="submit">Save</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- Modal (View Details) -->
+  <div class="modal-backdrop" *ngIf="showViewModal">
+    <div class="modal-box">
+      <h3>👤 Customer Details</h3>
+      <p><strong>Name:</strong> {{ selectedCustomer?.name }}</p>
+      <p><strong>Phone:</strong> {{ selectedCustomer?.phone }}</p>
+      <p><strong>Email:</strong> {{ selectedCustomer?.email }}</p>
+      <p><strong>Total Sales:</strong> Rs. {{ selectedCustomer?.totalSales || 0 }}</p>
+      <p><strong>Ranking:</strong> {{ selectedCustomer?.ranking || 'N/A' }}</p>
+      <div class="modal-actions">
+        <button type="button" (click)="closeView()">Close</button>
+      </div>
     </div>
   </div>
 </div>

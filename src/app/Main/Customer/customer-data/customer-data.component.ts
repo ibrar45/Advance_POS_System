@@ -1,73 +1,98 @@
-import { Component } from '@angular/core';
-
-interface Customer {
-  name: string;
-  phone: string;
-  email: string;
-}
+import { Component, OnInit } from '@angular/core';
+import { Customer } from '../../../Models/customer.model';
+import { CustomerService } from '../../../services/customer.service';
 
 @Component({
   selector: 'app-customer-data',
   templateUrl: './customer-data.component.html',
   styleUrls: ['./customer-data.component.css']
 })
-export class CustomerDataComponent {
-  searchText = '';
-  customers: Customer[] = [
-    { name: 'Ali Raza', phone: '03001234567', email: 'ali@example.com' },
-    { name: 'Fatima Khan', phone: '03009876543', email: 'fatima@example.com' }
-  ];
+export class CustomerDataComponent implements OnInit {
+  customers: Customer[] = [];
+  searchText: string = '';
+  showForm: boolean = false;
+  showViewModal: boolean = false;
+  editMode: boolean = false;
+  form: Customer = { customerId: 0, name: '', phone: '', email: '' };
+  selectedCustomer: Customer | null = null;
 
-  showForm = false;
-  editMode = false;
-  form: Customer = { name: '', phone: '', email: '' };
-  editIndex: number | null = null;
+  constructor(private customerService: CustomerService) {}
 
-  getInitials(name: string): string {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase();
+  ngOnInit(): void {
+    this.fetchCustomers();
   }
 
-  filteredCustomers() {
+  fetchCustomers(): void {
+    this.customerService.getAllCustomers().subscribe({
+      next: (data) => this.customers = data,
+      error: () => alert("Failed to load customers")
+    });
+  }
+
+  filteredCustomers(): Customer[] {
+    const lower = this.searchText.toLowerCase();
     return this.customers.filter(c =>
-      c.name.toLowerCase().includes(this.searchText.toLowerCase()) ||
-      c.phone.includes(this.searchText)
+      c.name.toLowerCase().includes(lower) || c.phone.includes(lower)
     );
   }
 
-  openCustomerForm() {
-    this.showForm = true;
-    this.editMode = false;
-    this.form = { name: '', phone: '', email: '' };
+  getInitials(name: string): string {
+    return name.split(' ').map(word => word[0]).join('').toUpperCase();
   }
 
-  editCustomer(customer: Customer) {
+  openCustomerForm(): void {
+    this.editMode = false;
+    this.form = { customerId: 0, name: '', phone: '', email: '' };
+    this.showForm = true;
+  }
+
+  editCustomer(customer: Customer): void {
     this.editMode = true;
-    this.showForm = true;
     this.form = { ...customer };
-    this.editIndex = this.customers.indexOf(customer);
+    this.showForm = true;
   }
 
-  deleteCustomer(customer: Customer) {
-    const index = this.customers.indexOf(customer);
-    if (index !== -1) this.customers.splice(index, 1);
-  }
-
-  saveCustomer() {
-    if (this.editMode && this.editIndex !== null) {
-      this.customers[this.editIndex] = { ...this.form };
+  saveCustomer(): void {
+    if (this.editMode && this.form.customerId !== undefined) {
+      this.customerService.updateCustomer(this.form.customerId, this.form).subscribe({
+        next: () => {
+          this.fetchCustomers();
+          this.closeForm();
+        },
+        error: () => alert("Update failed")
+      });
     } else {
-      this.customers.push({ ...this.form });
+      this.customerService.addCustomer(this.form).subscribe({
+        next: () => {
+          this.fetchCustomers();
+          this.closeForm();
+        },
+        error: () => alert("Add failed")
+      });
     }
-    this.closeForm();
   }
 
-  closeForm() {
+  deleteCustomer(customer: Customer): void {
+    if (!customer.customerId) return alert('Invalid customer ID');
+    if (confirm(`Delete ${customer.name}?`)) {
+      this.customerService.deleteCustomer(customer.customerId).subscribe({
+        next: () => this.fetchCustomers(),
+        error: () => alert("Delete failed")
+      });
+    }
+  }
+
+  viewHistory(customer: Customer): void {
+    this.selectedCustomer = customer;
+    this.showViewModal = true;
+  }
+
+  closeForm(): void {
     this.showForm = false;
-    this.editMode = false;
-    this.editIndex = null;
   }
 
-  viewHistory(customer: Customer) {
-    alert(`Purchase history for ${customer.name} will be shown here.`);
+  closeView(): void {
+    this.showViewModal = false;
+    this.selectedCustomer = null;
   }
 }

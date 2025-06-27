@@ -4,18 +4,20 @@ import { SetupRoutingModule } from './setup-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+
   ],
   imports: [
     CommonModule,
     SetupRoutingModule,
       MatCardModule,
+      ReactiveFormsModule,
     MatIconModule,
 FormsModule
 

@@ -1,85 +1,73 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { EmployeeService, Employee } from '../../services/employee.service';
 
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.css']
 })
-export class EmployeeComponent {
-  showAddModal: boolean = false;
-  editing: boolean = false;
+export class EmployeeComponent implements OnInit {
+  employeeList: Employee[] = [];
+  newEmployee: Employee = { employeeId: 0, name: '', role: 'Admin' };
 
-  employeeList = [
-    { name: 'Ali', role: 'Admin' },
-    { name: 'Fatima', role: 'Cashier' },
-    { name: 'Ahmed', role: 'Cashier' }
-  ];
+  showAddModal = false;
+  editing = false;
 
-  employeeSales = [
-    { name: 'Ali', sales: 120 },
-    { name: 'Fatima', sales: 60 },
-    { name: 'Ahmed', sales: 30 }
-  ];
+  constructor(private employeeService: EmployeeService) {}
 
-  // newEmployee is reused for both adding and editing
-  newEmployee = { name: '', role: 'Cashier' };
-  editIndex: number = -1;
+  ngOnInit(): void {
+    this.loadEmployees();
+  }
 
-  // Open modal for new employee
+  loadEmployees(): void {
+    this.employeeService.getAll().subscribe(data => this.employeeList = data);
+  }
+
   openAddModal(): void {
-    this.newEmployee = { name: '', role: 'Cashier' };
+    this.showAddModal = true;
     this.editing = false;
+    this.newEmployee = { employeeId: 0, name: '', role: 'Admin' };
+  }
+
+  editStaff(staff: Employee): void {
     this.showAddModal = true;
-  }
-
-  // Add new employee
-  confirmAddEmployee(): void {
-    this.employeeList.push({ ...this.newEmployee });
-    this.employeeSales.push({ name: this.newEmployee.name, sales: 0 });
-    this.showAddModal = false;
-  }
-
-  // Start editing an employee
-  editStaff(staff: any): void {
-    this.editIndex = this.employeeList.findIndex(e => e.name === staff.name);
-    this.newEmployee = { ...staff };
     this.editing = true;
-    this.showAddModal = true;
+    this.newEmployee = { ...staff }; // clone to avoid binding issues
   }
 
-  // Confirm editing
+  confirmAddEmployee(): void {
+    this.employeeService.add(this.newEmployee).subscribe(() => {
+      this.loadEmployees();
+      this.showAddModal = false;
+    });
+  }
+
   updateEmployee(): void {
-    if (this.editIndex !== -1) {
-      const oldName = this.employeeList[this.editIndex].name;
-      this.employeeList[this.editIndex] = { ...this.newEmployee };
+     console.log('Update called', this.newEmployee);
+    if (!this.newEmployee.employeeId) return;
 
-      // Update corresponding sales record
-      const salesIndex = this.employeeSales.findIndex(s => s.name === oldName);
-      if (salesIndex !== -1) {
-        this.employeeSales[salesIndex].name = this.newEmployee.name;
-      }
-    }
-    this.cancelEdit();
+    this.employeeService.updateEmployee(this.newEmployee.employeeId!, this.newEmployee).subscribe(() => {
+  this.loadEmployees();
+  this.cancelEdit();
+});
+
   }
 
-  // Cancel and close modal
+  removeStaff(staff: Employee): void {
+    if (staff.employeeId) {
+      this.employeeService.delete(staff.employeeId).subscribe(() => {
+        this.loadEmployees();
+      });
+    }
+  }
+
   cancelEdit(): void {
     this.showAddModal = false;
-    this.editing = false;
-    this.newEmployee = { name: '', role: 'Cashier' };
-    this.editIndex = -1;
+    this.newEmployee = { employeeId: 0, name: '', role: 'Admin' };
   }
 
-  // Delete employee
-  removeStaff(staff: any): void {
-    this.employeeList = this.employeeList.filter(e => e !== staff);
-    this.employeeSales = this.employeeSales.filter(s => s.name !== staff.name);
-  }
-
-  // Get performance based on max sales
   calculatePerformance(name: string): number {
-    const empSales = this.employeeSales.find(e => e.name === name)?.sales || 0;
-    const maxSales = Math.max(...this.employeeSales.map(e => e.sales), 1);
-    return Math.round((empSales / maxSales) * 100);
+    const sales = 10  ; // replace with actual logic
+    return sales;
   }
 }
